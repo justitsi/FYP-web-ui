@@ -9,8 +9,12 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci
 
-# Build frontend
+# Copy project files
 COPY . ./
+RUN rm src/modules/CONSTANTS.json
+COPY config/CONSTANTS.json src/modules/CONSTANTS.json
+
+# Build frontend
 RUN npm run build
 
 #################################################

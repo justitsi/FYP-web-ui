@@ -33,5 +33,13 @@ services:
         ports:
         - "5000:80"
         depends_on: 
-            - postgresdb
+            - api
+    reverseproxy:
+        build: ./reverseproxy/
+        restart: always
+        ports:
+        - "8000:80"
+        depends_on: 
+            - frontend
+            - api
         
