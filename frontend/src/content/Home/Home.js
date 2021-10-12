@@ -1,5 +1,6 @@
 import styles from './Home.module.scss';
 import ProjectTable from './../../components/ProjectTable'
+import { Jumbotron, Row, Col } from 'react-bootstrap';
 
 
 const Homepage = (props) => {
@@ -25,10 +26,16 @@ const Homepage = (props) => {
 
     return (
         <div className={styles.page}>
-            <h1>Home page</h1>
-            <ProjectTable
-                data={data}
-            />
+            <Jumbotron>
+                <Row>
+                    <Col md={2} />
+                    <Col md={8}>
+                        <ProjectTable
+                            data={data}
+                        />
+                    </Col>
+                </Row>
+            </Jumbotron>
         </div>
     )
 }
