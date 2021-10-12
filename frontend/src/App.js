@@ -1,3 +1,4 @@
+import './App.scss'
 import styles from './App.module.scss'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -13,7 +14,6 @@ function App() {
       <div className={styles.content}>
         <Router>
           <Navbar />
-
           <Switch>
             <Route exact path='/'>
               <Homepage />

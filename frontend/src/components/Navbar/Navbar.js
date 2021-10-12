@@ -1,23 +1,23 @@
-import styles from './Navbar.module.scss';
-import { Link } from "react-router-dom";
+import { Navbar, Nav } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-const Navbar = (props) => {
+const Navigation = (props) => {
     return (
-        <div>
-            <ul className={styles.ul}>
-                <li className={styles.li}>
-                    <Link to={'/'}>
-                        Homepage
-                    </Link>
-                </li>
-                <li className={styles.li}>
-                    <Link to={'/new-project'}>
-                        New Project
-                    </Link>
-                </li>
-            </ul>
-        </div>
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand href="/">Graph solver</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <LinkContainer to={'/'}>
+                        <Nav.Link>Home</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to={'/new-project'}>
+                        <Nav.Link>New Project</Nav.Link>
+                    </LinkContainer>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar >
     )
 }
 
-export default Navbar;
+export default Navigation;
