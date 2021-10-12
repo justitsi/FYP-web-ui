@@ -10,6 +10,11 @@ const Navbar = (props) => {
                         Homepage
                     </Link>
                 </li>
+                <li className={styles.li}>
+                    <Link to={'/new-project'}>
+                        New Project
+                    </Link>
+                </li>
             </ul>
         </div>
     )
