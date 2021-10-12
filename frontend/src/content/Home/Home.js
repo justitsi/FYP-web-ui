@@ -1,28 +1,22 @@
 import styles from './Home.module.scss';
+import { useState, useEffect } from 'react';
 import ProjectTable from './../../components/ProjectTable'
 import { Jumbotron, Row, Col } from 'react-bootstrap';
-
+import CONSTANTS from '../../modules/CONSTANTS.json';
+import { getRequest } from '../../modules/requests';
 
 const Homepage = (props) => {
-    const data = [
-        {
-            "id": 1,
-            "modified": "Tue, 12 Oct 2021 13:40:01 GMT",
-            "name": "test project"
-        },
-        {
-            "id": 2,
-            "modified": "Tue, 12 Oct 2021 13:40:11 GMT",
-            "name": "test project 2"
-        },
-        {
-            "id": 3,
-            "modified": "Tue, 12 Oct 2021 13:40:12 GMT",
-            "name": "test project 3"
-        }
-    ]
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [data, setData] = useState([])
 
+    useEffect(() => {
+        const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`
 
+        getRequest(address).then((result) => {
+            setData(result.data)
+            setIsLoaded(true)
+        }).catch((e) => console.log(e))
+    }, [])
 
     return (
         <div className={styles.page}>
@@ -30,9 +24,11 @@ const Homepage = (props) => {
                 <Row>
                     <Col md={2} />
                     <Col md={8}>
-                        <ProjectTable
-                            data={data}
-                        />
+                        {(isLoaded) &&
+                            <ProjectTable
+                                data={data}
+                            />
+                        }
                     </Col>
                 </Row>
             </Jumbotron>
