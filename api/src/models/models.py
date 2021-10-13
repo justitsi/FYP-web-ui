@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class Project(db.Model):
     __tablename__ = 'frontend_api_project'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(300), unique=True, nullable=False)
+    name = db.Column(db.String(300), nullable=False)
 
     data = db.Column(db.Text)
     runSettings = db.Column(db.Text)

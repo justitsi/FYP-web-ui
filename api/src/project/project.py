@@ -1,3 +1,4 @@
+import json
 from flask import Blueprint, request
 from datetime import datetime
 from models.models import Project, db
@@ -7,7 +8,7 @@ projects_blueprint = Blueprint('projects', __name__)
 
 
 @projects_blueprint.route('/', methods=['GET', 'POST'])
-def get_all_projects():
+def root_route():
     # try:
     if (request.method == 'GET'):
         db_projects = Project.query.all()
@@ -23,10 +24,12 @@ def get_all_projects():
         return generateResponse(projects)
     if (request.method == 'POST'):
         try:
+            print(request.json)
+            
             project = Project(
                 name=request.json["name"],
-                data=request.json["data"],
-                runSettings=request.json["runSettings"]
+                data=json.dumps(request.json["data"]),
+                runSettings=json.dumps(request.json["runSettings"])
             )
         except:
             return generateError(400, "Missing mandatory request paramaters in request body")
@@ -54,8 +57,9 @@ def manage_projects(projects_id):
             if (project):
                 try:
                     project.name = request.json["name"]
-                    project.data = request.json["data"]
-                    project.runSettings = request.json["runSettings"]
+                    project.data = json.dumps(request.json["data"])
+                    project.runSettings = json.dumps(
+                        request.json["runSettings"])
                 except:
                     return generateError(400, "Missing mandatory request paramaters in request body")
 

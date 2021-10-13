@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ProjectTable from './../../components/ProjectTable'
 import { Jumbotron, Row, Col } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
-import { getRequest } from '../../modules/requests';
+import { getRequest, deleteRequest } from '../../modules/requests';
 
 const Homepage = (props) => {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -15,8 +15,24 @@ const Homepage = (props) => {
         getRequest(address).then((result) => {
             setData(result.data)
             setIsLoaded(true)
-        }).catch((e) => console.log(e))
+        })
     }, [])
+
+    const handleProjectDelete = (projectID) => {
+        setIsLoaded(false)
+
+        const delete_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${projectID}`;
+        const get_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`
+
+        deleteRequest(delete_address).then((result) => {
+            if (result.status == 200) {
+                getRequest(get_address).then((result) => {
+                    setData(result.data)
+                    setIsLoaded(true)
+                })
+            }
+        })
+    }
 
     return (
         <div className={styles.page}>
@@ -27,6 +43,7 @@ const Homepage = (props) => {
                         {(isLoaded) &&
                             <ProjectTable
                                 data={data}
+                                deleteFunction={handleProjectDelete}
                             />
                         }
                     </Col>

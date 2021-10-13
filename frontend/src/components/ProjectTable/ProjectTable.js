@@ -1,12 +1,17 @@
 import styles from './ProjectTable.module.scss';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const ProjectTable = (props) => {
     const dataEntries = []
 
     for (const item of props.data) {
         const handleProjectDelete = () => {
-            console.log(`Deleteing project ${item.id}`)
+            props.deleteFunction(item.id)
+        }
+
+        const handleProjectRun = () => {
+            console.log(`Running project ${item.id}`)
         }
 
         dataEntries.push(
@@ -15,18 +20,21 @@ const ProjectTable = (props) => {
                 <td>{item.name}</td>
                 <td>{item.modified}</td>
                 <td>
-                    <a href={`/project/${item.id}`}>
-                        <button>
+                    <LinkContainer to={`/project/${item.id}`}>
+                        <Button>
                             View
-                        </button>
-                    </a>
+                        </Button>
+                    </LinkContainer>
                 </td>
                 <td>
-                    <a>
-                        <button onClick={handleProjectDelete}>
-                            Delete
-                        </button>
-                    </a>
+                    <Button onClick={handleProjectRun}>
+                        Run
+                    </Button>
+                </td>
+                <td>
+                    <Button onClick={handleProjectDelete}>
+                        Delete
+                    </Button>
                 </td>
             </tr>
         )
@@ -41,6 +49,7 @@ const ProjectTable = (props) => {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Modified</th>
+                        <th />
                         <th />
                         <th />
                     </tr>
