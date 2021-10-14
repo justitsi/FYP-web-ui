@@ -25,7 +25,8 @@ const Homepage = (props) => {
         const get_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`
 
         deleteRequest(delete_address).then((result) => {
-            if (result.status == 200) {
+            console.log(result)
+            if (parseInt(result.status) === 200) {
                 getRequest(get_address).then((result) => {
                     setData(result.data)
                     setIsLoaded(true)

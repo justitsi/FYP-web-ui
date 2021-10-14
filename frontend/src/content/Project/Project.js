@@ -22,7 +22,7 @@ const Project = (props) => {
             setData(result.data)
             setIsLoaded(true)
         }).catch((e) => console.log(e))
-    }, [])
+    }, [id])
 
     return (
         <div className={styles.page}>

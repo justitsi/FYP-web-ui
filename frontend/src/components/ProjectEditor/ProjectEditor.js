@@ -5,7 +5,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 const ProjectEditor = (props) => {
     const validateJson = (string) => {
         try {
-            let json = JSON.parse(string)
+            JSON.parse(string)
             return true
         }
         catch (e) { return false; }
