@@ -1,27 +1,60 @@
 import styles from './Project.module.scss';
 import { useParams } from "react-router-dom";
-import { Jumbotron, Row, Col } from 'react-bootstrap';
+import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
-import { getRequest } from '../../modules/requests';
+import { getRequest, postRequest } from '../../modules/requests';
 import { useState, useEffect } from 'react';
-// import CodeEditor from '@uiw/react-textarea-code-editor';
+import ProjectEditor from './../../components/ProjectEditor'
 
 const Project = (props) => {
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [response, setResponse] = useState(null)
-    const [data, setData] = useState(null)
-
-
     const { id } = useParams();
 
-    useEffect(() => {
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [response, setResponse] = useState(null)
+
+    const [projectName, setProjectName] = useState("")
+    const [projectData, setProjectData] = useState("")
+    const [projectOptions, setProjectOptions] = useState("")
+    const [projectValid, setProjectValid] = useState(false)
+
+
+    const getProject = () => {
+        setIsLoaded(false)
         const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`
 
         getRequest(address).then((result) => {
             setResponse(result)
-            setData(result.data)
             setIsLoaded(true)
+
+            setProjectName(result.data.name)
+            setProjectData(JSON.stringify(result.data.data))
+            setProjectOptions(JSON.stringify(result.data.runSettings))
+
         }).catch((e) => console.log(e))
+    }
+
+    const updateProject = () => {
+        const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
+
+        const requestBody = JSON.stringify({
+            "name": projectName,
+            "data": JSON.parse(projectData),
+            "runSettings": JSON.parse(projectOptions)
+        });
+
+        postRequest(address, requestBody).then((result) => {
+            if (parseInt(result.status) === 200) {
+                getProject()
+            }
+            else {
+                console.log("Error when updating project")
+            }
+        }).catch((e) => console.log(e))
+
+    }
+
+    useEffect(() => {
+        getProject();
     }, [id])
 
     return (
@@ -34,14 +67,27 @@ const Project = (props) => {
                             <Row>
                                 <Col md={2} />
                                 <Col md={8}>
-                                    <h1>{data.name}</h1>
-                                    <p>{JSON.stringify(data)}</p>
+                                    <ProjectEditor
+                                        projectName={projectName}
+                                        setProjectName={setProjectName}
+                                        projectData={projectData}
+                                        setProjectData={setProjectData}
+                                        projectOptions={projectOptions}
+                                        setProjectOptions={setProjectOptions}
+                                        setProjectValid={setProjectValid}
+                                    />
                                 </Col>
                             </Row>
                             <Row>
                                 <Col md={2} />
                                 <Col md={8}>
-                                    {/* json editor needs to be placed here */}
+                                    <Button
+                                        className={styles.right}
+                                        onClick={updateProject}
+                                        disabled={!projectValid}
+                                    >
+                                        Update
+                                    </Button>
                                 </Col>
                             </Row>
                         </Jumbotron>

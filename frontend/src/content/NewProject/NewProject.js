@@ -25,7 +25,7 @@ const NewProject = (props) => {
 
         postRequest(address, requestBody).then((result) => {
             if (parseInt(result.status) === 200) {
-                history.push("/");
+                history.push(`/project/${result.data.id}`);
             }
             else {
                 console.log("Error when creating project")

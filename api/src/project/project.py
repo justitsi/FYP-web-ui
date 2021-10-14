@@ -24,8 +24,6 @@ def root_route():
         return generateResponse(projects)
     if (request.method == 'POST'):
         try:
-            print(request.json)
-            
             project = Project(
                 name=request.json["name"],
                 data=json.dumps(request.json["data"]),
@@ -37,7 +35,11 @@ def root_route():
         db.session.add(project)
         db.session.commit()
 
-        return generateResponse("Project created")
+        return generateResponse({
+            "message": "Project created",
+            "id": project.id
+
+        })
     # except:
     #     return generateError(500, "Could not proccess request")
 
