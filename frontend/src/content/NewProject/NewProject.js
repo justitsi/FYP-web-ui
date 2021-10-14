@@ -1,22 +1,26 @@
 import styles from './NewProject.module.scss';
-import { Jumbotron, Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap';
+import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
-
+import ProjectEditor from './../../components/ProjectEditor';
 import CONSTANTS from '../../modules/CONSTANTS.json';
 import { postRequest } from '../../modules/requests';
 
 const NewProject = (props) => {
     const [projectName, setProjectName] = useState("New Project")
+    const [projectData, setProjectData] = useState(JSON.stringify({ "example": "data" }))
+    const [projectOptions, setProjectOptions] = useState(JSON.stringify({ "example": "settings" }))
+
+
     const history = useHistory();
 
     const handleProjectCreation = () => {
         const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`;
         const requestBody = JSON.stringify({
             "name": projectName,
-            "data": {},
-            "runSettings": {}
+            "data": JSON.parse(projectData),
+            "runSettings": JSON.parse(projectOptions)
         });
 
         postRequest(address, requestBody).then((result) => {
@@ -35,20 +39,14 @@ const NewProject = (props) => {
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
-                        <h1>{projectName}</h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={2} lg={3} />
-                    <Col md={8} lg={6}>
-                        <InputGroup>
-                            <FormControl
-                                placeholder="Project Name"
-                                aria-label="Project Name"
-                                value={projectName}
-                                onChange={(event) => { setProjectName(event.target.value) }}
-                            />
-                        </InputGroup>
+                        <ProjectEditor
+                            projectName={projectName}
+                            setProjectName={setProjectName}
+                            projectData={projectData}
+                            setProjectData={setProjectData}
+                            projectOptions={projectOptions}
+                            setProjectOptions={setProjectOptions}
+                        />
                     </Col>
                 </Row>
                 <br />

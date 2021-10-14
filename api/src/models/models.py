@@ -1,3 +1,4 @@
+import json
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 db = SQLAlchemy()
@@ -26,8 +27,8 @@ class Project(db.Model):
             'id': self.id,
             'name': self.name,
             'modified': self.modified,
-            'data': self.data,
-            'runSettings': self.runSettings
+            'data': json.loads(self.data),
+            'runSettings': json.loads(self.runSettings)
         }
         return (data)
 
