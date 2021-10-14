@@ -15,6 +15,8 @@ const ProjectEditor = (props) => {
     const dataInvalid = !validateJson(props.projectData);
     const optionsInvalid = !validateJson(props.projectOptions);
 
+    props.setProjectValid((!nameInvalid) && (!dataInvalid) && (!optionsInvalid));
+
     return (
         <div>
             <Row>

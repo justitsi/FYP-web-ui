@@ -8,10 +8,10 @@ import CONSTANTS from '../../modules/CONSTANTS.json';
 import { postRequest } from '../../modules/requests';
 
 const NewProject = (props) => {
-    const [projectName, setProjectName] = useState("New Project")
-    const [projectData, setProjectData] = useState(JSON.stringify({ "example": "data" }))
-    const [projectOptions, setProjectOptions] = useState(JSON.stringify({ "example": "settings" }))
-
+    const [projectName, setProjectName] = useState("New Project");
+    const [projectData, setProjectData] = useState(JSON.stringify({ "example": "data" }));
+    const [projectOptions, setProjectOptions] = useState(JSON.stringify({ "example": "settings" }));
+    const [projectValid, setProjectValid] = useState(false);
 
     const history = useHistory();
 
@@ -46,6 +46,7 @@ const NewProject = (props) => {
                             setProjectData={setProjectData}
                             projectOptions={projectOptions}
                             setProjectOptions={setProjectOptions}
+                            setProjectValid={setProjectValid}
                         />
                     </Col>
                 </Row>
@@ -53,7 +54,11 @@ const NewProject = (props) => {
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
-                        <Button className={styles.right} onClick={handleProjectCreation}>
+                        <Button
+                            className={styles.right}
+                            onClick={handleProjectCreation}
+                            disabled={!projectValid}
+                        >
                             Create
                         </Button>
                     </Col>
