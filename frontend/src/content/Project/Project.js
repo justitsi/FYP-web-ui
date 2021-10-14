@@ -48,6 +48,7 @@ const Project = (props) => {
             }
             else {
                 console.log("Error when updating project")
+                console.log(result)
             }
         }).catch((e) => console.log(e))
 
@@ -65,29 +66,36 @@ const Project = (props) => {
                     {(parseInt(response.status) === 200) &&
                         <Jumbotron>
                             <Row>
-                                <Col md={2} />
-                                <Col md={8}>
-                                    <ProjectEditor
-                                        projectName={projectName}
-                                        setProjectName={setProjectName}
-                                        projectData={projectData}
-                                        setProjectData={setProjectData}
-                                        projectOptions={projectOptions}
-                                        setProjectOptions={setProjectOptions}
-                                        setProjectValid={setProjectValid}
-                                    />
+                                <Col md={1} />
+                                <Col md={5}>
+                                    <h1 className={styles.heading}>{projectName}</h1>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={2} />
-                                <Col md={8}>
-                                    <Button
-                                        className={styles.right}
-                                        onClick={updateProject}
-                                        disabled={!projectValid}
-                                    >
-                                        Update
-                                    </Button>
+                                <Col md={1} />
+                                <Col md={5}>
+                                    <Row>
+                                        <ProjectEditor
+                                            projectName={projectName}
+                                            setProjectName={setProjectName}
+                                            projectData={projectData}
+                                            setProjectData={setProjectData}
+                                            projectOptions={projectOptions}
+                                            setProjectOptions={setProjectOptions}
+                                            setProjectValid={setProjectValid}
+                                        />
+                                    </Row>
+                                    <Row>
+                                        <Col md={1}>
+                                            <Button
+                                                className={styles.right}
+                                                onClick={updateProject}
+                                                disabled={!projectValid}
+                                            >
+                                                Update
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
                         </Jumbotron>

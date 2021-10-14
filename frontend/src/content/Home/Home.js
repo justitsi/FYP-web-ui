@@ -39,13 +39,18 @@ const Homepage = (props) => {
         <div className={styles.page}>
             <Jumbotron>
                 <Row>
-                    <Col md={2} />
-                    <Col md={8}>
+                    <Col sm={1} md={2} lg={3} />
+                    <Col sm={10} md={8} lg={6}>
+                        <h1>Projects</h1>
+                        <br />
                         {(isLoaded) &&
                             <ProjectTable
                                 data={data}
                                 deleteFunction={handleProjectDelete}
                             />
+                        }
+                        {(!isLoaded) &&
+                            <p>Loading...</p>
                         }
                     </Col>
                 </Row>

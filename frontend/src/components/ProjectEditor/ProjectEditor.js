@@ -18,12 +18,7 @@ const ProjectEditor = (props) => {
     props.setProjectValid((!nameInvalid) && (!dataInvalid) && (!optionsInvalid));
 
     return (
-        <div>
-            <Row>
-                <Col md={12}>
-                    <h1 className={styles.heading}>{props.projectName}</h1>
-                </Col>
-            </Row>
+        <div className={styles.container}>
             <Row>
                 <Col md={8}>
                     <Form.Group>

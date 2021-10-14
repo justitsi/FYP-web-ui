@@ -9,7 +9,7 @@ const Navigation = (props) => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <LinkContainer to={'/'}>
-                        <Nav.Link>Home</Nav.Link>
+                        <Nav.Link>Projects</Nav.Link>
                     </LinkContainer>
                     <LinkContainer to={'/new-project'}>
                         <Nav.Link>New Project</Nav.Link>

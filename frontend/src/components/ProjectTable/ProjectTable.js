@@ -16,9 +16,8 @@ const ProjectTable = (props) => {
 
         dataEntries.push(
             <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.modified}</td>
+                <td >{item.name}</td>
+                <td >{item.modified}</td>
                 <td>
                     <LinkContainer to={`/project/${item.id}`}>
                         <Button>
@@ -42,13 +41,11 @@ const ProjectTable = (props) => {
 
     return (
         <div className={styles.container}>
-            <h2>Current projects</h2>
             <Table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
-                        <th>Modified</th>
+                        <th>Last Modified</th>
                         <th />
                         <th />
                         <th />

@@ -29,6 +29,7 @@ const NewProject = (props) => {
             }
             else {
                 console.log("Error when creating project")
+                console.log(result)
             }
         }).catch((e) => console.log(e))
     }
@@ -36,6 +37,12 @@ const NewProject = (props) => {
     return (
         <div className={styles.page}>
             <Jumbotron>
+                <Row>
+                    <Col md={2} lg={3} />
+                    <Col md={8} lg={6}>
+                        <h1 className={styles.heading}>{projectName}</h1>
+                    </Col>
+                </Row>
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
