@@ -1,5 +1,6 @@
 import styles from './ProjectEditor.module.scss';
 import { Row, Col, Form } from 'react-bootstrap';
+import BytesLabel from './../BytesLabel';
 
 
 const ProjectEditor = (props) => {
@@ -45,6 +46,7 @@ const ProjectEditor = (props) => {
                             value={props.projectData}
                             onChange={(event) => { props.setProjectData(event.target.value) }}
                         />
+                        <BytesLabel bytes={new Blob([props.projectData]).size} />
                     </Form.Group>
                 </Col>
             </Row>
@@ -59,6 +61,7 @@ const ProjectEditor = (props) => {
                             value={props.projectOptions}
                             onChange={(event) => { props.setProjectOptions(event.target.value) }}
                         />
+                        <BytesLabel bytes={new Blob([props.projectOptions]).size} />
                     </Form.Group>
                 </Col>
             </Row>
