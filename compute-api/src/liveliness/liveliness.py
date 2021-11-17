@@ -1,7 +1,7 @@
 from flask import Blueprint
 import psutil
 import time
-from util import generateResponse
+from modules.util import generateResponse
 
 liveliness_blueprint = Blueprint('liveliness', __name__)
 
