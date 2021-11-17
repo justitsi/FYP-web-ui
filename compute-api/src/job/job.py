@@ -21,5 +21,5 @@ def process_job():
 
     return generateResponse({
         "output_id": output.id,
-        "created_time": output.started
+        "created_time": output.created
     })

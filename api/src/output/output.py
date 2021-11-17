@@ -15,7 +15,7 @@ def root_route():
         results.append({
             'id': result.id,
             'project_id': result.project_id,
-            'started': result.started
+            'created': result.created
         })
 
     return generateResponse(results)
@@ -33,7 +33,7 @@ def get_outputs_for_project(projectId):
         results.append({
             'id': result.id,
             'project_id': result.project_id,
-            'started': result.started
+            'created': result.created
         })
 
     return generateResponse(results)

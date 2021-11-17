@@ -45,7 +45,7 @@ class Output(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer)
 
-    started = db.Column(db.DateTime)
+    created = db.Column(db.DateTime)
     finished = db.Column(db.DateTime)
 
     jobSpec = db.Column(db.PickleType)
@@ -55,7 +55,7 @@ class Output(db.Model):
         return '<Output %r>' % self.id
 
     def __init__(self, jobSpec, projectID):
-        self.started = datetime.now()
+        self.created = datetime.now()
         self.jobSpec = jobSpec
         self.project_id = projectID
         self.results = None
@@ -64,9 +64,9 @@ class Output(db.Model):
         data = {
             'id': self.id,
             'project_id': self.project_id,
-            'started': self.started,
+            'created': self.created,
             'finished': self.finished,
             'jobSpec': self.jobSpec,
             'results': self.results
         }
-        return (data)
+        return data
