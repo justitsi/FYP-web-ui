@@ -3,7 +3,7 @@ version: "3"
 services:
     postgresdb:
         image: postgres
-        restart: on-failure
+        restart: always
         environment:
             - POSTGRES_DB=postgres
             - POSTGRES_USER=postgres
@@ -25,6 +25,13 @@ services:
         restart: always
         ports:
         - "8082:8082"
+        depends_on: 
+            - postgresdb
+    compute-api:
+        build: ./compute-api/
+        restart: always
+        ports:
+        - "8083:8083"
         depends_on: 
             - postgresdb
     frontend:
