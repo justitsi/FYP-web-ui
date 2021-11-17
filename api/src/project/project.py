@@ -39,7 +39,6 @@ def root_route():
         return generateResponse({
             "message": "Project created",
             "id": project.id
-
         })
     # except:
     #     return generateError(500, "Could not proccess request")

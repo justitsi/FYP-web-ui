@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 # import routes
 from liveliness.liveliness import liveliness_blueprint
+from job.job import job_blueprint
 
 
 # Load env variables
@@ -47,6 +48,7 @@ def home():
 
 
 app.register_blueprint(liveliness_blueprint, url_prefix='/liveliness')
+app.register_blueprint(job_blueprint, url_prefix='/job')
 
 
 app.config["DEBUG"] = True
