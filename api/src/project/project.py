@@ -1,4 +1,3 @@
-import json
 from flask import Blueprint, request
 from datetime import datetime
 from models.models import Project, db
