@@ -9,8 +9,12 @@ import { postRequest } from '../../modules/requests';
 
 const NewProject = (props) => {
     const [projectName, setProjectName] = useState("New Project");
-    const [projectData, setProjectData] = useState(JSON.stringify({ "example": "data" }));
-    const [projectOptions, setProjectOptions] = useState(JSON.stringify({ "example": "settings" }));
+    const [projectGroupData, setProjectGroupData] = useState(JSON.stringify({ "example": "groups" }));
+    const [projectNodeData, setProjectNodeData] = useState(JSON.stringify({ "example": "nodes" }));
+
+    const [projectGeneralOptions, setProjectGeneralOptions] = useState(JSON.stringify({ "example": "run settings" }));
+    const [projectCostingOptions, setProjectCostingOptions] = useState(JSON.stringify({ "example": "costing settings" }));
+
     const [projectValid, setProjectValid] = useState(false);
 
     const history = useHistory();
@@ -19,8 +23,12 @@ const NewProject = (props) => {
         const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`;
         const requestBody = JSON.stringify({
             "name": projectName,
-            "data": JSON.parse(projectData),
-            "runSettings": JSON.parse(projectOptions)
+
+            "node_data": JSON.parse(projectNodeData),
+            "group_data": JSON.parse(projectGroupData),
+
+            "general_options": JSON.parse(projectGeneralOptions),
+            "costing_options": JSON.parse(projectCostingOptions)
         });
 
         postRequest(address, requestBody).then((result) => {
@@ -49,10 +57,19 @@ const NewProject = (props) => {
                         <ProjectEditor
                             projectName={projectName}
                             setProjectName={setProjectName}
-                            projectData={projectData}
-                            setProjectData={setProjectData}
-                            projectOptions={projectOptions}
-                            setProjectOptions={setProjectOptions}
+                            // group data props
+                            projectGroupData={projectGroupData}
+                            setProjectGroupData={setProjectGroupData}
+                            // node data props
+                            projectNodeData={projectNodeData}
+                            setProjectNodeData={setProjectNodeData}
+                            // job general options
+                            projectGeneralOptions={projectGeneralOptions}
+                            setProjectGeneralOptions={setProjectGeneralOptions}
+                            // job costing options
+                            projectCostingOptions={projectCostingOptions}
+                            setProjectCostingOptions={setProjectCostingOptions}
+
                             setProjectValid={setProjectValid}
                         />
                     </Col>
@@ -70,6 +87,7 @@ const NewProject = (props) => {
                         </Button>
                     </Col>
                 </Row>
+                <br />
             </Jumbotron>
         </div>
     )

@@ -9,17 +9,23 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(300), nullable=False)
 
-    data = db.Column(db.Text)
-    runSettings = db.Column(db.Text)
+    node_data = db.Column(db.PickleType)
+    group_data = db.Column(db.PickleType)
+
+    run_costing_settings = db.Column(db.PickleType)
+    run_settings = db.Column(db.PickleType)
+
     modified = db.Column(db.DateTime)
 
     def __repr__(self):
         return '<Project %r>' % self.id
 
-    def __init__(self, name, data, runSettings):
+    def __init__(self, name, node_data, group_data, run_costing_settings, run_settings):
         self.name = name
-        self.data = data
-        self.runSettings = runSettings
+        self.node_data = node_data
+        self.group_data = group_data
+        self.run_costing_settings = run_costing_settings
+        self.run_settings = run_settings
         self.modified = datetime.now()
 
     def jsonify(self):
@@ -27,8 +33,10 @@ class Project(db.Model):
             'id': self.id,
             'name': self.name,
             'modified': self.modified,
-            'data': json.loads(self.data),
-            'runSettings': json.loads(self.runSettings)
+            'node_data': self.node_data,
+            'group_data': self.group_data,
+            'costing_options': self.run_costing_settings,
+            'general_options': self.run_settings,
         }
         return (data)
 

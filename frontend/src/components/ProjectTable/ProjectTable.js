@@ -26,11 +26,6 @@ const ProjectTable = (props) => {
                     </LinkContainer>
                 </td>
                 <td>
-                    <Button onClick={handleProjectRun}>
-                        Run
-                    </Button>
-                </td>
-                <td>
                     <Button onClick={handleProjectDelete}>
                         Delete
                     </Button>
@@ -46,7 +41,6 @@ const ProjectTable = (props) => {
                     <tr>
                         <th>Name</th>
                         <th>Last Modified</th>
-                        <th />
                         <th />
                         <th />
                     </tr>

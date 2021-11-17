@@ -13,10 +13,21 @@ const ProjectEditor = (props) => {
     }
 
     const nameInvalid = ((props.projectName.length === 0) || (props.projectName.length >= 300));
-    const dataInvalid = !validateJson(props.projectData);
-    const optionsInvalid = !validateJson(props.projectOptions);
+    // validate data
+    const nodesInvalid = !validateJson(props.projectNodeData);
+    const groupsInvalid = !validateJson(props.projectGroupData);
+    // validate options
+    const projectGeneralOptionsInvalid = !validateJson(props.projectGeneralOptions);
+    const projectCostingOptionsInvalid = !validateJson(props.projectCostingOptions);
 
-    props.setProjectValid((!nameInvalid) && (!dataInvalid) && (!optionsInvalid));
+
+    props.setProjectValid(
+        (!nameInvalid) &&
+        (!nodesInvalid) &&
+        (!groupsInvalid) &&
+        (!projectGeneralOptionsInvalid) &&
+        (!projectCostingOptionsInvalid)
+    );
 
     return (
         <div className={styles.container}>
@@ -38,30 +49,60 @@ const ProjectEditor = (props) => {
             <Row>
                 <Col md={12}>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Project Data</Form.Label>
+                        <Form.Label>Nodes Data</Form.Label>
                         <Form.Control as="textarea" rows={5}
-                            placeholder="Project Data"
-                            aria-label="Project Data"
-                            isInvalid={dataInvalid}
-                            value={props.projectData}
-                            onChange={(event) => { props.setProjectData(event.target.value) }}
+                            placeholder="Nodes Data"
+                            aria-label="Nodes Data"
+                            isInvalid={nodesInvalid}
+                            value={props.projectNodeData}
+                            onChange={(event) => { props.setProjectNodeData(event.target.value) }}
                         />
-                        <BytesLabel bytes={new Blob([props.projectData]).size} />
+                        <BytesLabel bytes={new Blob([props.projectNodeData]).size} />
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
                 <Col md={12}>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Project Options</Form.Label>
-                        <Form.Control as="textarea" rows={4}
-                            placeholder="Project Options"
-                            aria-label="Project Options"
-                            isInvalid={optionsInvalid}
-                            value={props.projectOptions}
-                            onChange={(event) => { props.setProjectOptions(event.target.value) }}
+                        <Form.Label>Groups Data</Form.Label>
+                        <Form.Control as="textarea" rows={5}
+                            placeholder="Groups Data"
+                            aria-label="Groups Data"
+                            isInvalid={groupsInvalid}
+                            value={props.projectGroupData}
+                            onChange={(event) => { props.setProjectGroupData(event.target.value) }}
                         />
-                        <BytesLabel bytes={new Blob([props.projectOptions]).size} />
+                        <BytesLabel bytes={new Blob([props.projectGroupData]).size} />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>General Project/Job Options</Form.Label>
+                        <Form.Control as="textarea" rows={4}
+                            placeholder="General Project/Job Options"
+                            aria-label="General Project/Job Options"
+                            isInvalid={projectGeneralOptionsInvalid}
+                            value={props.projectGeneralOptions}
+                            onChange={(event) => { props.setProjectGeneralOptions(event.target.value) }}
+                        />
+                        <BytesLabel bytes={new Blob([props.projectGeneralOptions]).size} />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Costing Project/Job Options</Form.Label>
+                        <Form.Control as="textarea" rows={4}
+                            placeholder="Costing Project/Job Options"
+                            aria-label="Costing Project/Job Options"
+                            isInvalid={projectCostingOptionsInvalid}
+                            value={props.projectCostingOptions}
+                            onChange={(event) => { props.setProjectCostingOptions(event.target.value) }}
+                        />
+                        <BytesLabel bytes={new Blob([props.projectCostingOptions]).size} />
                     </Form.Group>
                 </Col>
             </Row>

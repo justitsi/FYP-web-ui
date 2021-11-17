@@ -12,9 +12,11 @@ const Project = (props) => {
     const [isLoaded, setIsLoaded] = useState(false)
     const [response, setResponse] = useState(null)
 
-    const [projectName, setProjectName] = useState("")
-    const [projectData, setProjectData] = useState("")
-    const [projectOptions, setProjectOptions] = useState("")
+    const [projectName, setProjectName] = useState("New Project");
+    const [projectGroupData, setProjectGroupData] = useState(JSON.stringify({ "example": "groups" }));
+    const [projectNodeData, setProjectNodeData] = useState(JSON.stringify({ "example": "nodes" }));
+    const [projectGeneralOptions, setProjectGeneralOptions] = useState(JSON.stringify({ "example": "run settings" }));
+    const [projectCostingOptions, setProjectCostingOptions] = useState(JSON.stringify({ "example": "costing settings" }));
     const [projectValid, setProjectValid] = useState(false)
 
 
@@ -27,8 +29,10 @@ const Project = (props) => {
             setIsLoaded(true)
 
             setProjectName(result.data.name)
-            setProjectData(JSON.stringify(result.data.data))
-            setProjectOptions(JSON.stringify(result.data.runSettings))
+            setProjectGroupData(JSON.stringify(result.data.group_data))
+            setProjectNodeData(JSON.stringify(result.data.node_data))
+            setProjectGeneralOptions(JSON.stringify(result.data.general_options))
+            setProjectCostingOptions(JSON.stringify(result.data.costing_options))
 
         }).catch((e) => console.log(e))
     }
@@ -38,8 +42,12 @@ const Project = (props) => {
 
         const requestBody = JSON.stringify({
             "name": projectName,
-            "data": JSON.parse(projectData),
-            "runSettings": JSON.parse(projectOptions)
+
+            "node_data": JSON.parse(projectNodeData),
+            "group_data": JSON.parse(projectGroupData),
+
+            "general_options": JSON.parse(projectGeneralOptions),
+            "costing_options": JSON.parse(projectCostingOptions)
         });
 
         postRequest(address, requestBody).then((result) => {
@@ -78,10 +86,19 @@ const Project = (props) => {
                                         <ProjectEditor
                                             projectName={projectName}
                                             setProjectName={setProjectName}
-                                            projectData={projectData}
-                                            setProjectData={setProjectData}
-                                            projectOptions={projectOptions}
-                                            setProjectOptions={setProjectOptions}
+                                            // group data props
+                                            projectGroupData={projectGroupData}
+                                            setProjectGroupData={setProjectGroupData}
+                                            // node data props
+                                            projectNodeData={projectNodeData}
+                                            setProjectNodeData={setProjectNodeData}
+                                            // job general options
+                                            projectGeneralOptions={projectGeneralOptions}
+                                            setProjectGeneralOptions={setProjectGeneralOptions}
+                                            // job costing options
+                                            projectCostingOptions={projectCostingOptions}
+                                            setProjectCostingOptions={setProjectCostingOptions}
+
                                             setProjectValid={setProjectValid}
                                         />
                                     </Row>
@@ -98,6 +115,7 @@ const Project = (props) => {
                                     </Row>
                                 </Col>
                             </Row>
+                            <br />
                         </Jumbotron>
                     }
                     {(parseInt(response.status) === 404) &&
