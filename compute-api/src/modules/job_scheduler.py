@@ -23,7 +23,7 @@ def sendOptimisationJob(jobSpec, id):
         ),
         job_timeout=MAX_JOB_LENGTH
     )
-    print(json.dumps(job.to_dict(), indent=2, default=str))
+    # print(json.dumps(job.to_dict(), indent=2, default=str))
     return job
 
 
