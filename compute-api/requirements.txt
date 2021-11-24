@@ -7,3 +7,5 @@ flask_sqlalchemy
 psycopg2-binary>=2.8
 python-dotenv
 flask-cors
+rq
+redis

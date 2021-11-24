@@ -1,11 +1,11 @@
 from flask import Blueprint, request
 from models.models import Output, db
-from util import generateResponse, generateError
+from modules.util import generateResponse, generateError
 
-outputs_blueprint = Blueprint('outputs', __name__)
+output_blueprint = Blueprint('outputs', __name__)
 
 
-@outputs_blueprint.route('/', methods=['GET'])
+@output_blueprint.route('/', methods=['GET'])
 def root_route():
     # try:
     db_results = Output.query.all()
@@ -29,31 +29,7 @@ def root_route():
     #     return generateError(500, "Could not proccess request")
 
 
-@outputs_blueprint.route('/byProject/<projectId>', methods=['GET'])
-def get_outputs_for_project(projectId):
-    # try:
-    db_results = Output.query.filter_by(project_id=projectId)
-    results = []
-
-    for result in db_results:
-        job_finished = False
-        if (result.finished):
-            job_finished = result.finished
-
-        results.append({
-            'id': result.id,
-            'project_id': result.project_id,
-            'jobID': result.jobID,
-            'created': result.created,
-            'finished': job_finished
-        })
-
-    return generateResponse(results)
-    # except:
-    #     return generateError(500, "Could not proccess request")
-
-
-@outputs_blueprint.route('/byID/<outputID>', methods=['GET', 'DELETE'])
+@output_blueprint.route('/byID/<outputID>', methods=['GET', 'DELETE'])
 def manage_by_id(outputID):
     # try:
     result = Output.query.filter_by(id=outputID).first()

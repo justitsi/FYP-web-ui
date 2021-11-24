@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # import routes
 from liveliness.liveliness import liveliness_blueprint
 from job.job import job_blueprint
+from output.output import output_blueprint
 
 
 # Load env variables
@@ -41,7 +42,7 @@ def home():
     return {
         "data": {
             "message": "Currently supported endpoints",
-            "endpoints": ["/liveliness"]
+            "endpoints": ["/liveliness", "/job", "/output"]
         },
         "status": 200
     }
@@ -49,6 +50,7 @@ def home():
 
 app.register_blueprint(liveliness_blueprint, url_prefix='/liveliness')
 app.register_blueprint(job_blueprint, url_prefix='/job')
+app.register_blueprint(output_blueprint, url_prefix='/output')
 
 
 app.config["DEBUG"] = True

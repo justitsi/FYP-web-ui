@@ -7,6 +7,7 @@ class Output(db.Model):
     __tablename__ = 'optimizer_output'
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer)
+    jobID = db.Column(db.String(300))
 
     created = db.Column(db.DateTime)
     finished = db.Column(db.DateTime)
@@ -27,6 +28,7 @@ class Output(db.Model):
         data = {
             'id': self.id,
             'project_id': self.project_id,
+            'jobID': self.jobID,
             'created': self.created,
             'finished': self.finished,
             'jobSpec': self.jobSpec,
