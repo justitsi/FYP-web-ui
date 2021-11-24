@@ -1,5 +1,5 @@
 from redis import Redis
-from rq import Connection, Queue, Worker
+from rq import Queue, Worker
 import os
 from dotenv import load_dotenv
 
