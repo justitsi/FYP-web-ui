@@ -21,9 +21,9 @@ def root_route():
             'project_id': result.project_id,
             'jobID': result.jobID,
             'created': result.created,
+            'started': result.started,
             'finished': job_finished
         })
-
     return generateResponse(results)
     # except:
     #     return generateError(500, "Could not proccess request")
@@ -45,6 +45,7 @@ def get_outputs_for_project(projectId):
             'project_id': result.project_id,
             'jobID': result.jobID,
             'created': result.created,
+            'started': result.started,
             'finished': job_finished
         })
 

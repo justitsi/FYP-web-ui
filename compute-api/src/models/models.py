@@ -10,6 +10,7 @@ class Output(db.Model):
     jobID = db.Column(db.String(300))
 
     created = db.Column(db.DateTime)
+    started = db.Column(db.DateTime)
     finished = db.Column(db.DateTime)
 
     jobSpec = db.Column(db.PickleType)
@@ -30,6 +31,7 @@ class Output(db.Model):
             'project_id': self.project_id,
             'jobID': self.jobID,
             'created': self.created,
+            'started': self.started,
             'finished': self.finished,
             'jobSpec': self.jobSpec,
             'results': self.results

@@ -34,8 +34,6 @@ services:
     optimisation-worker:
         build: ./optimisation-worker/
         restart: always
-        ports:
-        - "8084:8084"
         depends_on: 
             - postgresdb
             - redis
@@ -61,6 +59,7 @@ services:
         restart: always
         ports:
         - "8000:80"
+        - "8443:443"
         depends_on: 
             - frontend
             - api

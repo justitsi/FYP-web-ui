@@ -21,6 +21,7 @@ def root_route():
             'project_id': result.project_id,
             'jobID': result.jobID,
             'created': result.created,
+            'started': result.started,
             'finished': job_finished
         })
 

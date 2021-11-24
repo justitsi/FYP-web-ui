@@ -44,9 +44,10 @@ class Output(db.Model):
     __tablename__ = 'optimizer_output'
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer)
-    jobID = db.Column(db.String(300), nullable=False)
+    jobID = db.Column(db.String(300))
 
     created = db.Column(db.DateTime)
+    started = db.Column(db.DateTime)
     finished = db.Column(db.DateTime)
 
     jobSpec = db.Column(db.PickleType)
@@ -55,10 +56,9 @@ class Output(db.Model):
     def __repr__(self):
         return '<Output %r>' % self.id
 
-    def __init__(self, jobSpec, projectID, jobID):
+    def __init__(self, jobSpec, projectID):
         self.created = datetime.now()
         self.jobSpec = jobSpec
-        self.jobID = jobID
         self.project_id = projectID
         self.results = None
 
@@ -68,6 +68,7 @@ class Output(db.Model):
             'project_id': self.project_id,
             'jobID': self.jobID,
             'created': self.created,
+            'started': self.started,
             'finished': self.finished,
             'jobSpec': self.jobSpec,
             'results': self.results

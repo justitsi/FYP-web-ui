@@ -13,6 +13,7 @@ class Output(base):
     jobID = Column(String(300))
 
     created = Column(DateTime)
+    started = Column(DateTime)
     finished = Column(DateTime)
 
     jobSpec = Column(PickleType)
@@ -33,6 +34,7 @@ class Output(base):
             'project_id': self.project_id,
             'jobID': self.jobID,
             'created': self.created,
+            'started': self.started,
             'finished': self.finished,
             'jobSpec': self.jobSpec,
             'results': self.results
