@@ -1,7 +1,7 @@
 import styles from './Home.module.scss';
 import { useState, useEffect } from 'react';
 import ProjectTable from './../../components/ProjectTable'
-import { Jumbotron, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
 import { getRequest, deleteRequest, postRequest } from '../../modules/requests';
 import { buildJobFromProjectData, validateJob } from '../../modules/jobs';
@@ -61,25 +61,23 @@ const Homepage = (props) => {
 
     return (
         <div className={styles.page}>
-            <Jumbotron>
-                <Row>
-                    <Col sm={1} md={2} lg={3} />
-                    <Col sm={10} md={8} lg={6}>
-                        <h1>Projects</h1>
-                        <br />
-                        {(isLoaded) &&
-                            <ProjectTable
-                                data={data}
-                                deleteFunction={handleProjectDelete}
-                                runFuncton={handleProjectRun}
-                            />
-                        }
-                        {(!isLoaded) &&
-                            <p>Loading...</p>
-                        }
-                    </Col>
-                </Row>
-            </Jumbotron>
+            <Row>
+                <Col sm={1} md={2} lg={3} />
+                <Col sm={10} md={8} lg={6}>
+                    <h1>Projects</h1>
+                    <br />
+                    {(isLoaded) &&
+                        <ProjectTable
+                            data={data}
+                            deleteFunction={handleProjectDelete}
+                            runFuncton={handleProjectRun}
+                        />
+                    }
+                    {(!isLoaded) &&
+                        <p>Loading...</p>
+                    }
+                </Col>
+            </Row>
         </div>
     )
 }

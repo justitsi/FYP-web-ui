@@ -38,7 +38,7 @@ const NewProject = (props) => {
 
     return (
         <div className={styles.page}>
-            <Jumbotron>
+            <div>
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
@@ -69,7 +69,7 @@ const NewProject = (props) => {
                     </Col>
                 </Row>
                 <br />
-            </Jumbotron>
+            </div>
         </div>
     )
 }

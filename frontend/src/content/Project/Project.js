@@ -1,12 +1,14 @@
 import styles from './Project.module.scss';
 import { useParams } from "react-router-dom";
-import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
 import default_project from '../../modules/default_project.json';
 import { getRequest, postRequest } from '../../modules/requests';
 import { useState, useEffect } from 'react';
 import ProjectEditor from './../../components/ProjectEditor';
 import OutputTable from '../../components/OutputTable/OutputTable';
+import { validateJob } from '../../modules/jobs';
+
 
 const Project = (props) => {
     const { id } = useParams();
@@ -19,7 +21,6 @@ const Project = (props) => {
     const [projectData, setProjectData] = useState();
 
     const getProject = () => {
-        setIsLoaded(false)
         const address_project = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`
         const address_outputs = `${CONSTANTS.INTERFACE_API_LOCATION}/output/byProject//${id}`
 
@@ -46,7 +47,6 @@ const Project = (props) => {
         }).catch((e) => console.log(e))
     }
 
-
     const updateProject = () => {
         const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
 
@@ -71,6 +71,50 @@ const Project = (props) => {
         }).catch((e) => console.log(e))
     }
 
+    const runProject = () => {
+        // save current project spec, build job specification and send it to compute api, then update _entire_ page state
+
+        const get_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
+        const submit_job_address = `${CONSTANTS.COMPUTE_API_LOCATION}/job/submit`;
+        const update_project_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
+
+        const saveRequestBody = JSON.stringify({
+            "name": projectData.name,
+
+            "node_data": projectData.jobSpec.nodes,
+            "group_data": projectData.jobSpec.groups,
+
+            "general_options": projectData.jobSpec.alg_params,
+            "costing_options": projectData.jobSpec.costing_params
+        });
+
+        postRequest(update_project_address, saveRequestBody).then((save_results) => {
+            if (parseInt(save_results.status) === 200) {
+                const job_object = {
+                    projectId: id,
+                    jobSpec: projectData.jobSpec
+                }
+
+                if (validateJob(job_object)) {
+                    postRequest(submit_job_address, JSON.stringify(job_object)).then((result) => {
+                        if (parseInt(result.status) === 200) {
+                            getProject();
+                        }
+                        else {
+                            console.log(result);
+                        }
+                    })
+                } else {
+                    console.log("Invalid job specification");
+                }
+            }
+            else {
+                console.log("Error when updating project")
+                console.log(save_results)
+            }
+        }).catch((e) => console.log(e))
+    }
+
     useEffect(() => {
         getProject();
     }, [id])
@@ -81,7 +125,7 @@ const Project = (props) => {
             {(isLoaded) &&
                 <div>
                     {(parseInt(response.status) === 200) &&
-                        <Jumbotron>
+                        <div>
                             <Row>
                                 <Col md={1} />
                                 <Col md={5}>
@@ -110,14 +154,29 @@ const Project = (props) => {
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col>
-                                    < OutputTable
-                                        projectOutputs={projectOutputs}
-                                    />
+                                <Col md={5}>
+                                    <Row>
+                                        < OutputTable
+                                            projectOutputs={projectOutputs}
+                                        />
+                                    </Row>
+                                    <br />
+                                    <Row>
+
+                                        <Col md={1}>
+                                            <Button
+                                                className={styles.right}
+                                                onClick={runProject}
+                                                disabled={!projectValid}
+                                            >
+                                                Run
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
                             <br />
-                        </Jumbotron>
+                        </div>
                     }
                     {(parseInt(response.status) === 404) &&
                         <Row>
