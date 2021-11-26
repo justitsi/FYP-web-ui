@@ -1,4 +1,4 @@
 {
     "INTERFACE_API_LOCATION": "http://localhost:8002",
-    "COMPUTE_API_LOCATION": "http://localhost:8083"
+    "COMPUTE_API_LOCATION": "http://localhost:8003"
 }

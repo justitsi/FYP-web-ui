@@ -5,30 +5,24 @@ import { useHistory } from "react-router-dom";
 
 import ProjectEditor from './../../components/ProjectEditor';
 import CONSTANTS from '../../modules/CONSTANTS.json';
+import default_project from '../../modules/default_project.json';
 import { postRequest } from '../../modules/requests';
 
 const NewProject = (props) => {
-    const [projectName, setProjectName] = useState("New Project");
-    const [projectGroupData, setProjectGroupData] = useState(JSON.stringify({ "example": "groups" }));
-    const [projectNodeData, setProjectNodeData] = useState(JSON.stringify({ "example": "nodes" }));
-
-    const [projectGeneralOptions, setProjectGeneralOptions] = useState(JSON.stringify({ "example": "run settings" }));
-    const [projectCostingOptions, setProjectCostingOptions] = useState(JSON.stringify({ "example": "costing settings" }));
-
+    const [projectData, setProjectData] = useState(default_project);
     const [projectValid, setProjectValid] = useState(false);
-
     const history = useHistory();
 
     const handleProjectCreation = () => {
         const address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/`;
         const requestBody = JSON.stringify({
-            "name": projectName,
+            "name": projectData.name,
 
-            "node_data": JSON.parse(projectNodeData),
-            "group_data": JSON.parse(projectGroupData),
+            "node_data": projectData.jobSpec.nodes,
+            "group_data": projectData.jobSpec.groups,
 
-            "general_options": JSON.parse(projectGeneralOptions),
-            "costing_options": JSON.parse(projectCostingOptions)
+            "general_options": projectData.jobSpec.alg_params,
+            "costing_options": projectData.jobSpec.costing_params
         });
 
         postRequest(address, requestBody).then((result) => {
@@ -48,28 +42,15 @@ const NewProject = (props) => {
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
-                        <h1 className={styles.heading}>{projectName}</h1>
+                        <h1 className={styles.heading}>{projectData.name}</h1>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={2} lg={3} />
                     <Col md={8} lg={6}>
                         <ProjectEditor
-                            projectName={projectName}
-                            setProjectName={setProjectName}
-                            // group data props
-                            projectGroupData={projectGroupData}
-                            setProjectGroupData={setProjectGroupData}
-                            // node data props
-                            projectNodeData={projectNodeData}
-                            setProjectNodeData={setProjectNodeData}
-                            // job general options
-                            projectGeneralOptions={projectGeneralOptions}
-                            setProjectGeneralOptions={setProjectGeneralOptions}
-                            // job costing options
-                            projectCostingOptions={projectCostingOptions}
-                            setProjectCostingOptions={setProjectCostingOptions}
-
+                            projectData={projectData}
+                            setProjectData={setProjectData}
                             setProjectValid={setProjectValid}
                         />
                     </Col>

@@ -1,6 +1,7 @@
 import styles from './ProjectTable.module.scss';
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { validateJob } from '../../modules/jobs';
 
 const ProjectTable = (props) => {
     const dataEntries = []
@@ -11,7 +12,7 @@ const ProjectTable = (props) => {
         }
 
         const handleProjectRun = () => {
-            console.log(`Running project ${item.id}`)
+            props.runFuncton(item.id)
         }
 
         dataEntries.push(
@@ -24,6 +25,11 @@ const ProjectTable = (props) => {
                             View
                         </Button>
                     </LinkContainer>
+                </td>
+                <td>
+                    <Button onClick={handleProjectRun}>
+                        Run
+                    </Button>
                 </td>
                 <td>
                     <Button onClick={handleProjectDelete}>
