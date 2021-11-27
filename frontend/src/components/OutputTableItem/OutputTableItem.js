@@ -34,6 +34,10 @@ const OutputTableItem = (props) => {
         history.push(`/output/${props.data.id}`);
     }
 
+    const handleDelete = () => {
+        props.deleteFunction(props.data.id);
+    }
+
     let text = '';
     if (isLoaded) {
         text = ` ${message}`;
@@ -58,7 +62,7 @@ const OutputTableItem = (props) => {
                     <Button onClick={viewOutput} className={styles.spaceRight}>
                         View
                     </Button>
-                    <Button variant="danger">
+                    <Button onClick={handleDelete} variant="danger">
                         Delete
                     </Button>
                 </div>

@@ -2,7 +2,7 @@ import styles from './Project.module.scss';
 import { useParams } from "react-router-dom";
 import { Row, Col, Button } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
-import { getRequest, postRequest } from '../../modules/requests';
+import { getRequest, postRequest, deleteRequest } from '../../modules/requests';
 import { useState, useEffect } from 'react';
 import ProjectEditor from './../../components/ProjectEditor';
 import OutputTable from '../../components/OutputTable/OutputTable';
@@ -112,6 +112,15 @@ const Project = (props) => {
         }).catch((e) => console.log(e))
     }
 
+    const deleteOutput = (output_id) => {
+        const output_address = `${CONSTANTS.INTERFACE_API_LOCATION}/output/byID/${output_id}`
+        deleteRequest(output_address).then((result) => {
+            if (parseInt(result.status) === 200) {
+                getProject();
+            }
+        }).catch((e) => console.log(e))
+    }
+
     useEffect(() => {
         getProject();
     }, [id])
@@ -131,7 +140,7 @@ const Project = (props) => {
                             </Row>
                             <Row>
                                 <Col md={1} />
-                                <Col md={5}>
+                                <Col md={7}>
                                     <Row>
                                         <ProjectEditor
                                             projectData={projectData}
@@ -151,10 +160,11 @@ const Project = (props) => {
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col md={5}>
+                                <Col md={3}>
                                     <Row>
                                         < OutputTable
                                             projectOutputs={projectOutputs}
+                                            deleteFunction={deleteOutput}
                                         />
                                     </Row>
                                     <br />

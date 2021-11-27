@@ -5,7 +5,7 @@ import CONSTANTS from '../../modules/CONSTANTS.json';
 import { getRequest, deleteRequest } from '../../modules/requests';
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
-
+import OutputResultViewer from './../../components/OutputResultViewer';
 
 
 const Output = (props) => {
@@ -77,6 +77,7 @@ const Output = (props) => {
                             <Button onClick={deleteOutput} variant="danger">
                                 Delete
                             </Button>
+
                         </Col>
                         <Col md={3}>
                             <ListGroup>
@@ -98,15 +99,9 @@ const Output = (props) => {
                     <Row>
                         <Col md={2} />
                         <Col md={8}>
-
-                            <Form.Group className="mb-3">
-                                <Form.Control
-                                    as="textarea"
-                                    rows={10}
-                                    readOnly={true}
-                                    value={JSON.stringify(data.results, undefined, 4)}
-                                />
-                            </Form.Group>
+                            <OutputResultViewer
+                                data={data.results[0]}
+                            />
                         </Col>
                     </Row>
                     <br />

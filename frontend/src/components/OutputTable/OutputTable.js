@@ -7,6 +7,7 @@ const OutputTable = (props) => {
         tableItems.push(<OutputTableItem
             data={item}
             key={item.id}
+            deleteFunction={props.deleteFunction}
         />)
     }
 
