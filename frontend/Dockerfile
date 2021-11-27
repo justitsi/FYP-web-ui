@@ -1,7 +1,7 @@
 #################################################
 # Container to build application code
 #################################################
-FROM node:14-alpine as node-build
+FROM node:16-bullseye as node-build
 WORKDIR /app
 
 # Install dependencies

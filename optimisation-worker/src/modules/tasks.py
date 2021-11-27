@@ -35,13 +35,14 @@ def run_optimisation_job(spec):
     possible_trees = runner.run()
 
     # get the best solution and only store it
-    best_tree = possible_trees[0]
+    if possible_trees[0]:
+        best_tree = possible_trees[0]
 
-    for tree in possible_trees:
-        if tree['cost'] <= best_tree['cost']:
-            best_tree = tree
+        for tree in possible_trees:
+            if tree['cost'] <= best_tree['cost']:
+                best_tree = tree
 
-    best_solutions.append(best_tree)
+        best_solutions.append(best_tree)
 
     # save result
     output.finished = datetime.now()
