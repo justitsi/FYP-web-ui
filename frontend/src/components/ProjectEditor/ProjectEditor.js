@@ -79,9 +79,6 @@ const ProjectEditor = (props) => {
             const fileContent = JSON.parse(reader.result);
             const data = {}
 
-            let name;
-            if (fileContent.name) name = fileContent.name;
-            else name = ''
             copyObjectProperty(data, fileContent, 'alg_params', {})
             copyObjectProperty(data, fileContent, 'costing_params', {})
             copyObjectProperty(data, fileContent, 'groups', [])

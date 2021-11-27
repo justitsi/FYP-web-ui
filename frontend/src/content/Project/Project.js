@@ -2,7 +2,6 @@ import styles from './Project.module.scss';
 import { useParams } from "react-router-dom";
 import { Row, Col, Button } from 'react-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
-import default_project from '../../modules/default_project.json';
 import { getRequest, postRequest } from '../../modules/requests';
 import { useState, useEffect } from 'react';
 import ProjectEditor from './../../components/ProjectEditor';
@@ -73,8 +72,6 @@ const Project = (props) => {
 
     const runProject = () => {
         // save current project spec, build job specification and send it to compute api, then update _entire_ page state
-
-        const get_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
         const submit_job_address = `${CONSTANTS.COMPUTE_API_LOCATION}/job/submit`;
         const update_project_address = `${CONSTANTS.INTERFACE_API_LOCATION}/project/${id}`;
 
@@ -168,6 +165,7 @@ const Project = (props) => {
                                                 className={styles.right}
                                                 onClick={runProject}
                                                 disabled={!projectValid}
+                                                variant="success"
                                             >
                                                 Run
                                             </Button>

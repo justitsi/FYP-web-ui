@@ -1,5 +1,5 @@
 import styles from './NewProject.module.scss';
-import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 

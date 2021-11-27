@@ -4,7 +4,7 @@ import BytesLabel from './../BytesLabel';
 const ProjectEditorTextBox = (props) => {
     return (
         <div>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Group className="mb-3">
                 <Form.Label>{props.label}</Form.Label>
                 <Form.Control as="textarea" rows={12}
                     placeholder={props.label}

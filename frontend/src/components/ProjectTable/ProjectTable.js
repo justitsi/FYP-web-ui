@@ -1,7 +1,6 @@
 import styles from './ProjectTable.module.scss';
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { validateJob } from '../../modules/jobs';
 
 const ProjectTable = (props) => {
     const dataEntries = []
@@ -20,19 +19,19 @@ const ProjectTable = (props) => {
                 <td >{item.name}</td>
                 <td >{item.modified}</td>
                 <td>
-                    <LinkContainer to={`/project/${item.id}`}>
+                    <LinkContainer to={`/project/${item.id}`} variant="primary">
                         <Button>
                             View
                         </Button>
                     </LinkContainer>
                 </td>
                 <td>
-                    <Button onClick={handleProjectRun}>
+                    <Button onClick={handleProjectRun} variant="success">
                         Run
                     </Button>
                 </td>
                 <td>
-                    <Button onClick={handleProjectDelete}>
+                    <Button onClick={handleProjectDelete} variant="danger">
                         Delete
                     </Button>
                 </td>

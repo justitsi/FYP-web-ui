@@ -1,11 +1,13 @@
 import styles from './OutputTableItem.module.scss';
-import { Accordion, Button } from 'react-bootstrap';
+import { Accordion, Button, ListGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import CONSTANTS from '../../modules/CONSTANTS.json';
 import { getRequest } from '../../modules/requests';
+import { useHistory } from "react-router-dom";
 
 
 const OutputTableItem = (props) => {
+    const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
     const [message, setMessage] = useState("")
 
@@ -26,7 +28,11 @@ const OutputTableItem = (props) => {
 
     useEffect(() => {
         getStatus();
-    }, [])
+    }, [props.data])
+
+    const viewOutput = () => {
+        history.push(`/output/${props.data.id}`);
+    }
 
     let text = '';
     if (isLoaded) {
@@ -40,19 +46,19 @@ const OutputTableItem = (props) => {
 
             </Accordion.Header>
             <Accordion.Body>
-                <ul>
-                    <li>Project ID: {props.data.project_id}</li>
-
-                    <li>Job created: {props.data.created}</li>
-                    <li>Job Started: {props.data.started}</li>
-                    <li>Job finished: {props.data.finished}</li>
-                    <li>Job ID: {props.data.jobID}</li>
-                </ul>
+                <ListGroup>
+                    <ListGroup.Item>Project ID: {props.data.project_id}</ListGroup.Item>
+                    <ListGroup.Item>Job created: {props.data.created}</ListGroup.Item>
+                    <ListGroup.Item>Job Started: {props.data.started}</ListGroup.Item>
+                    <ListGroup.Item>Job finished: {props.data.finished}</ListGroup.Item>
+                    <ListGroup.Item>Job ID: {props.data.jobID}</ListGroup.Item>
+                </ListGroup>
+                <br />
                 <div >
-                    <Button className={styles.spaceRight}>
+                    <Button onClick={viewOutput} className={styles.spaceRight}>
                         View
                     </Button>
-                    <Button>
+                    <Button variant="danger">
                         Delete
                     </Button>
                 </div>
