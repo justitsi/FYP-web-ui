@@ -37,6 +37,12 @@ const Output = (props) => {
         }
     }
 
+    let job_complete = false;
+    if (data)
+        if (data.results)
+            if (data.results[0])
+                job_complete = true
+
     useEffect(() => {
         getOutput();
     }, [id])
@@ -99,9 +105,14 @@ const Output = (props) => {
                     <Row>
                         <Col md={2} />
                         <Col md={8}>
-                            <OutputResultViewer
-                                data={data.results[0]}
-                            />
+                            {(job_complete) &&
+                                <OutputResultViewer
+                                    data={data.results[0]}
+                                />
+                            }
+                            {(!job_complete) &&
+                                <p>No job results registered yet...</p>
+                            }
                         </Col>
                     </Row>
                     <br />
