@@ -1,7 +1,7 @@
 import styles from './ProjectEditor.module.scss';
 import { Row, Col, Form } from 'react-bootstrap';
-import BytesLabel from './../BytesLabel';
 import { useState } from 'react';
+import ProjectEditorTextBox from '../ProjectEditorTextBox';
 
 
 const ProjectEditor = (props) => {
@@ -13,11 +13,10 @@ const ProjectEditor = (props) => {
         catch (e) { return false; }
     }
 
-    const [nodesString, setNodesString] = useState(JSON.stringify(props.projectData.jobSpec.nodes))
-    const [groupsString, setGroupsString] = useState(JSON.stringify(props.projectData.jobSpec.groups))
-    const [algParamsString, setAlgParamsString] = useState(JSON.stringify(props.projectData.jobSpec.alg_params))
-    const [costingParamsString, setCostingParamsString] = useState(JSON.stringify(props.projectData.jobSpec.costing_params))
-
+    const [nodesString, setNodesString] = useState(JSON.stringify(props.projectData.jobSpec.nodes, undefined, 4))
+    const [groupsString, setGroupsString] = useState(JSON.stringify(props.projectData.jobSpec.groups, undefined, 4))
+    const [algParamsString, setAlgParamsString] = useState(JSON.stringify(props.projectData.jobSpec.alg_params, undefined, 4))
+    const [costingParamsString, setCostingParamsString] = useState(JSON.stringify(props.projectData.jobSpec.costing_params, undefined, 4))
 
     const nameInvalid = ((props.projectData.name.length === 0) || (props.projectData.name.length >= 300));
     // validate data
@@ -69,6 +68,37 @@ const ProjectEditor = (props) => {
         setCostingParamsString(string);
     }
 
+    const copyObjectProperty = (destination, source, prop_name, def) => {
+        if (source[prop_name]) destination[prop_name] = source[prop_name]
+        else destination[prop_name] = def
+    }
+
+    const updateProjectData = (json_file) => {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const fileContent = JSON.parse(reader.result);
+            const data = {}
+
+            let name;
+            if (fileContent.name) name = fileContent.name;
+            else name = ''
+            copyObjectProperty(data, fileContent, 'alg_params', {})
+            copyObjectProperty(data, fileContent, 'costing_params', {})
+            copyObjectProperty(data, fileContent, 'groups', [])
+            copyObjectProperty(data, fileContent, 'nodes', [])
+
+            setNodesString(JSON.stringify(fileContent.nodes, undefined, 4))
+            setGroupsString(JSON.stringify(fileContent.groups, undefined, 4))
+            setAlgParamsString(JSON.stringify(fileContent.alg_params, undefined, 4))
+            setCostingParamsString(JSON.stringify(fileContent.costing_params, undefined, 4))
+
+            const projCopy = JSON.parse(JSON.stringify(props.projectData))
+            projCopy.jobSpec = data;
+            props.setProjectData(projCopy);
+        };
+        reader.readAsText(json_file);
+    }
+
     return (
         <div className={styles.container}>
             <Row>
@@ -85,67 +115,51 @@ const ProjectEditor = (props) => {
                     </Form.Group>
                 </Col>
             </Row>
-            <br />
             <Row>
                 <Col md={12}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Nodes Data</Form.Label>
-                        <Form.Control as="textarea" rows={5}
-                            placeholder="Nodes Data"
-                            aria-label="Nodes Data"
-                            isInvalid={nodesInvalid}
-                            value={nodesString}
-                            onChange={(event) => { updateNodes(event.target.value) }}
-                        />
-                        <BytesLabel bytes={new Blob([nodesString]).size} />
-                    </Form.Group>
+                    <ProjectEditorTextBox
+                        label={"Nodes Data"}
+                        value={nodesString}
+                        update={updateNodes}
+                        invalid={nodesInvalid}
+                    />
                 </Col>
             </Row>
             <Row>
                 <Col md={12}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Groups Data</Form.Label>
-                        <Form.Control as="textarea" rows={5}
-                            placeholder="Groups Data"
-                            aria-label="Groups Data"
-                            isInvalid={groupsInvalid}
-                            value={groupsString}
-                            onChange={(event) => { updateGroups(event.target.value) }}
-                        />
-                        <BytesLabel bytes={new Blob([groupsString]).size} />
-                    </Form.Group>
-                </Col>
-            </Row>
-
-            <Row>
-                <Col md={12}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>General Project/Job Options</Form.Label>
-                        <Form.Control as="textarea" rows={4}
-                            placeholder="General Project/Job Options"
-                            aria-label="General Project/Job Options"
-                            isInvalid={projectGeneralOptionsInvalid}
-                            value={algParamsString}
-                            onChange={(event) => { updateAlgParamas(event.target.value) }}
-                        />
-                        <BytesLabel bytes={new Blob([algParamsString]).size} />
-                    </Form.Group>
+                    <ProjectEditorTextBox
+                        label={"Groups Data"}
+                        value={groupsString}
+                        update={updateGroups}
+                        invalid={groupsInvalid}
+                    />
                 </Col>
             </Row>
             <Row>
                 <Col md={12}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Costing Project/Job Options</Form.Label>
-                        <Form.Control as="textarea" rows={4}
-                            placeholder="Costing Project/Job Options"
-                            aria-label="Costing Project/Job Options"
-                            isInvalid={projectCostingOptionsInvalid}
-                            value={costingParamsString}
-                            onChange={(event) => { updateCostingParamas(event.target.value) }}
-                        />
-                        <BytesLabel bytes={new Blob([costingParamsString]).size} />
-                    </Form.Group>
+                    <ProjectEditorTextBox
+                        label={"General Project/Job Options"}
+                        value={algParamsString}
+                        update={updateAlgParamas}
+                        invalid={projectGeneralOptionsInvalid}
+                    />
                 </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <ProjectEditorTextBox
+                        label={"Costing Project/Job Options"}
+                        value={costingParamsString}
+                        update={updateCostingParamas}
+                        invalid={projectCostingOptionsInvalid}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Form.Group controlId="formFileSm" className="mb-3">
+                    <Form.Label>Import job json</Form.Label>
+                    <Form.Control type="file" size="sm" onChange={(e) => updateProjectData(e.target.files[0])} />
+                </Form.Group>
             </Row>
         </div>
     );

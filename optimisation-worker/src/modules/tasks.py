@@ -35,7 +35,7 @@ def run_optimisation_job(spec):
     possible_trees = runner.run()
 
     # get the best solution and only store it
-    if possible_trees[0]:
+    if len(possible_trees) > 0:
         best_tree = possible_trees[0]
 
         for tree in possible_trees:

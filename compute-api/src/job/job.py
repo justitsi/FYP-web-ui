@@ -40,9 +40,11 @@ def check_job_status(job_id):
 
     if (job):
         status = job.get_status()
-        return generateResponse({
-            "job_id": job_id,
-            "status": status
-        })
+
     else:
-        return generateError(404, "Job not found")
+        status = 'NOT REGISTERED'
+
+    return generateResponse({
+        "job_id": job_id,
+        "status": status
+    })

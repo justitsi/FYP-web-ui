@@ -15,9 +15,11 @@ const OutputTableItem = (props) => {
 
         getRequest(address).then((result) => {
             if (parseInt(result.status) === 200) {
-                setMessage(result.data.status)
-                setIsLoaded(true)
-                setTimeout(function () { getStatus() }, 30000)
+                if (result.data.status !== "NOT REGISTERED") {
+                    setMessage(result.data.status)
+                    setIsLoaded(true)
+                    setTimeout(function () { getStatus() }, 30000)
+                }
             }
         })
     }
