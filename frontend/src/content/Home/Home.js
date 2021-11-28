@@ -1,7 +1,8 @@
 import styles from './Home.module.scss';
 import { useState, useEffect } from 'react';
 import ProjectTable from './../../components/ProjectTable'
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import CONSTANTS from '../../modules/CONSTANTS.json';
 import { getRequest, deleteRequest, postRequest } from '../../modules/requests';
 import { buildJobFromProjectData, validateJob } from '../../modules/jobs';
@@ -62,8 +63,8 @@ const Homepage = (props) => {
     return (
         <div className={styles.page}>
             <Row>
-                <Col sm={1} md={2} lg={3} />
-                <Col sm={10} md={8} lg={6}>
+                <Col md={3} />
+                <Col md={6}>
                     <h1>Projects</h1>
                     <br />
                     {(isLoaded) &&
@@ -78,7 +79,19 @@ const Homepage = (props) => {
                     }
                 </Col>
             </Row>
-        </div>
+            <Row>
+                <Col md={3} />
+                <Col md={6}>
+                    <div className={styles.right}>
+                        <LinkContainer to={'/new-project'}>
+                            <Button>
+                                New
+                            </Button>
+                        </LinkContainer>
+                    </div>
+                </Col>
+            </Row>
+        </div >
     )
 }
 export default Homepage;
