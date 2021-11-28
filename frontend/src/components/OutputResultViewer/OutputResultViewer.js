@@ -11,7 +11,7 @@ const OutputResultViewer = (props) => {
     for (let i = 0; i < props.data.nodes.length; i++) {
         const item = props.data.nodes[i];
         let style = styles.tdCell;
-        if (i % 2 == 1) style = styles.tdCellGray;
+        if (i % 2 === 1) style = styles.tdCellGray;
 
         const nodeData = (
             <td key={item.id + 1} className={style}>
@@ -25,7 +25,7 @@ const OutputResultViewer = (props) => {
     for (let i = 0; i < props.data.nodes.length; i++) {
         const item = props.data.nodes[i];
         let style = styles.tdCell;
-        if (i % 2 == 1) style = styles.tdCellGray;
+        if (i % 2 === 1) style = styles.tdCellGray;
 
         const groupData = (
             <td key={`${item.groupID}${item.id + 1}`} className={style}>

@@ -11,6 +11,9 @@ const Navigation = (props) => {
                     <LinkContainer to={'/'}>
                         <Nav.Link>Projects</Nav.Link>
                     </LinkContainer>
+                    <LinkContainer to={'/outputs'}>
+                        <Nav.Link>Outputs</Nav.Link>
+                    </LinkContainer>
                     <LinkContainer to={'/new-project'}>
                         <Nav.Link>New Project</Nav.Link>
                     </LinkContainer>

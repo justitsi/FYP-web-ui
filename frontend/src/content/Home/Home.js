@@ -47,7 +47,7 @@ const Homepage = (props) => {
             if (validateJob(job_object)) {
                 postRequest(submit_job_address, JSON.stringify(job_object)).then((result) => {
                     if (parseInt(result.status) === 200) {
-                        history.push(`/project/${projectID}`);
+                        history.push(`/output/${result.data.outputID}`);
                     }
                     else {
                         console.log(result);

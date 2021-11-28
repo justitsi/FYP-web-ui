@@ -8,6 +8,7 @@ import Homepage from './content/Home';
 import Projectpage from './content/Project';
 import NewProjectpage from './content/NewProject';
 import OutputPage from './content/Output';
+import OutputsPage from './content/Outputs/Outputs';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <Switch>
             <Route exact path='/'>
               <Homepage />
+            </Route>
+            <Route exact path='/outputs'>
+              <OutputsPage />
             </Route>
             <Route exact path='/project/:id'>
               <Projectpage />
