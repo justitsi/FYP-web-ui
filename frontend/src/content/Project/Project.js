@@ -25,20 +25,23 @@ const Project = (props) => {
 
         getRequest(address_project).then((result_project) => {
             getRequest(address_outputs).then((result_outputs) => {
-                const jobSpec = {
-                    costing_params: result_project.data.costing_options,
-                    alg_params: result_project.data.general_options,
-                    nodes: result_project.data.node_data,
-                    groups: result_project.data.group_data
-                }
+                console.log(result_project)
+                if (parseInt(result_project.status) == 200) {
+                    const jobSpec = {
+                        costing_params: result_project.data.costing_options,
+                        alg_params: result_project.data.general_options,
+                        nodes: result_project.data.node_data,
+                        groups: result_project.data.group_data
+                    }
 
-                const projectDataTmp = {
-                    "name": result_project.data.name,
-                    "jobSpec": jobSpec
-                }
+                    const projectDataTmp = {
+                        "name": result_project.data.name,
+                        "jobSpec": jobSpec
+                    }
 
-                setProjectData(projectDataTmp)
-                setProjectOutputs(result_outputs.data)
+                    setProjectData(projectDataTmp)
+                    setProjectOutputs(result_outputs.data)
+                }
 
                 setResponse(result_project)
                 setIsLoaded(true)
@@ -190,7 +193,7 @@ const Project = (props) => {
                         <Row>
                             <Col md={2} />
                             <Col md={8}>
-                                <h1>Project {`<${id}>`} not found</h1>
+                                <h4>404 - Project {id} not found</h4>
                             </Col>
                         </Row>
                     }
