@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from datetime import datetime
-from models.models import Project, db
+from models.models import Project, Output, db
 from util import generateResponse, generateError
 
 projects_blueprint = Blueprint('projects', __name__)
@@ -84,6 +84,10 @@ def manage_projects(projects_id):
     if (request.method == 'DELETE'):
         project = Project.query.filter_by(id=projects_id).first()
         if (project):
+            outputs = Output.query.filter_by(project_id=projects_id)
+            for output in outputs:
+                db.session.delete(output)
+
             db.session.delete(project)
             db.session.commit()
 
