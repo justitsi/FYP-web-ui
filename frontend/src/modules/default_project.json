@@ -2,41 +2,36 @@
     "name": "New Project",
     "jobSpec": {
         "alg_params": {
-            "TREE_PRUNE_TRESHOLD": 3000,
-            "STEP_MAX_COST": 1000,
-            "MINIMUM_ACCEPTABLE_SOLUTION": 750,
-            "PRINT_RESULTS": false
+            "TREE_PRUNE_TRESHOLD": 900,
+            "STEP_MAX_COST": 250,
+            "MINIMUM_ACCEPTABLE_SOLUTION": -9999999999999999,
+            "PRINT_RESULTS": false,
+            "MAX_PATHS_PER_NODE": 3
         },
         "costing_params": {
             "node-node": {
                 "pre-run-costs": [
                     {
-                        "node_property_name": "age_group-start",
-                        "operation": "similiarity_float",
-                        "multiplier": 500
+                        "node_property_name": "affinities",
+                        "operation": "includes_node_id",
+                        "multiplier": -50
                     }
                 ]
             },
             "node-group": {
                 "pre-run-costs": [
                     {
-                        "group_property_name": "capacity_attendees",
-                        "node_property_name": "attendees",
-                        "operation": "difference_over",
-                        "multiplier": 50
-                    },
-                    {
-                        "group_property_name": "capacity_spectators",
-                        "node_property_name": "spectators",
-                        "operation": "difference_over",
-                        "multiplier": 15
+                        "group_property_name": "target_grade",
+                        "node_property_name": "avg.Grade",
+                        "operation": "difference_absolute",
+                        "multiplier": 2.5
                     }
                 ],
                 "runtime-costs": [
                     {
-                        "group_property_name": "evnt_capacity",
+                        "group_property_name": "target_size",
                         "operation": "count_all_over",
-                        "multiplier": 9999999
+                        "multiplier": 1000
                     },
                     {
                         "operation": "add_once",
@@ -45,60 +40,140 @@
                     }
                 ]
             },
-            "group-group": {}
+            "group-group": {
+                "post-run-costs": [
+                    {
+                        "operation": "difference_count_nodes",
+                        "multiplier": 100
+                    }
+                ]
+            }
         },
         "groups": [
             {
                 "id": 0,
                 "base_score": 100,
-                "capacity_attendees": 30,
-                "capacity_spectators": 150,
-                "evnt_capacity": 3
+                "target_grade": 90,
+                "target_size": 3
             },
             {
                 "id": 1,
                 "base_score": 100,
-                "capacity_attendees": 100,
-                "capacity_spectators": 100,
-                "evnt_capacity": 3
+                "target_grade": 80,
+                "target_size": 3
+            },
+            {
+                "id": 2,
+                "base_score": 100,
+                "target_grade": 70,
+                "target_size": 3
+            },
+            {
+                "id": 3,
+                "base_score": 100,
+                "target_grade": 60,
+                "target_size": 3
             }
         ],
         "nodes": [
             {
                 "id": 0,
-                "age_group-start": 14,
-                "attendees": 25,
-                "spectators": 100
+                "affinities": [
+                    1,
+                    5
+                ],
+                "avg.Grade": 95.6
             },
             {
                 "id": 1,
-                "age_group-start": 14,
-                "attendees": 15,
-                "spectators": 60
+                "affinities": [
+                    0,
+                    5
+                ],
+                "avg.Grade": 13
             },
             {
                 "id": 2,
-                "age_group-start": 14,
-                "attendees": 4,
-                "spectators": 45
+                "affinities": [
+                    1,
+                    7
+                ],
+                "avg.Grade": 37.7
             },
             {
                 "id": 3,
-                "age_group-start": 22,
-                "attendees": 40,
-                "spectators": 160
+                "affinities": [
+                    2,
+                    4
+                ],
+                "avg.Grade": 98.9
             },
             {
                 "id": 4,
-                "age_group-start": 22,
-                "attendees": 20,
-                "spectators": 80
+                "affinities": [
+                    5,
+                    6
+                ],
+                "avg.Grade": 50.6
             },
             {
                 "id": 5,
-                "age_group-start": 22,
-                "attendees": 4,
-                "spectators": 150
+                "affinities": [
+                    4,
+                    1
+                ],
+                "avg.Grade": 23.5
+            },
+            {
+                "id": 6,
+                "affinities": [
+                    4,
+                    0
+                ],
+                "avg.Grade": 98.0
+            },
+            {
+                "id": 7,
+                "affinities": [
+                    6,
+                    0,
+                    3
+                ],
+                "avg.Grade": 87.8
+            },
+            {
+                "id": 8,
+                "affinities": [
+                    0,
+                    8,
+                    3,
+                    2,
+                    1
+                ],
+                "avg.Grade": 43.3
+            },
+            {
+                "id": 9,
+                "affinities": [
+                    5,
+                    0
+                ],
+                "avg.Grade": 100
+            },
+            {
+                "id": 10,
+                "affinities": [],
+                "avg.Grade": 79.45
+            },
+            {
+                "id": 11,
+                "affinities": [
+                    9,
+                    4,
+                    7,
+                    8
+                ],
+                "avg.Grade": 43.6
             }
         ]
     }

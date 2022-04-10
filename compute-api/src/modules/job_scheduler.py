@@ -1,7 +1,6 @@
 from redis import Redis
 from rq import Queue
 from modules.tasks import run_optimisation_job
-import json
 import os
 from dotenv import load_dotenv
 

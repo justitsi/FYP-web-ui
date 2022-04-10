@@ -13,7 +13,7 @@ class NodeToNodeCostCalc:
     # array of node ids from path ([int]) and id (int)
     def getNodeToNodesCost(self, nodesInGroup, nodeToAddID):
         cost = 0
-        # check for affinities
+        # calcualte cost based on cost of pairing each node with each node
         for groupNode in nodesInGroup:
             cost += self.getNodeToNodeCost(groupNode, nodeToAddID)
 
@@ -37,23 +37,27 @@ class NodeToNodeCostCalc:
                 if (node1Property):
                     for item in node1Property:
                         if (item == node2['id']):
-                            cost -= costParam['multiplier']
+                            cost += costParam['multiplier']
 
                 if (node2Property):
                     for item in node2Property:
                         if (item == node1['id']):
-                            cost -= costParam['multiplier']
+                            cost += costParam['multiplier']
 
             # handle similiarity_float operation
             if (costParam['operation'] == 'similiarity_float'):
                 if (node1Property and node2Property):
                     difference = 1
                     if (node1Property > node2Property):
-                        difference = node2Property/node1Property
+                        difference = node2Property / node1Property
                     else:
-                        difference = node1Property/node2Property
+                        difference = node1Property / node2Property
 
                     cost += costParam['multiplier'] * difference
+
+            # handle difference_absolute operation
+            if (costParam['operation'] == 'difference_absolute'):
+                cost = abs(node1Property - node2Property) * costParam['multiplier']  # nopep8
 
             # handle is_equal operation
             if (costParam['operation'] == 'is_equal'):

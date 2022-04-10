@@ -2,37 +2,24 @@ import { Card, Form, Tabs, Tab, Table } from 'react-bootstrap';
 import styles from "./OutputResultViewer.module.scss";
 
 const OutputResultViewer = (props) => {
-    const table_rows = [[], []]
+    const table_rows = []
 
+    for (let i = 0; i < props.data.groups.length; i++) {
+        let nodesStr = "";
+        for (const node of props.data.groups[i]) {
+            nodesStr += node + ", "
+        }
+        if (nodesStr.length > 0) {
+            nodesStr = nodesStr.slice(0, -2);
+        }
 
-    table_rows[0].push(<th key={0}>Node</th>)
-    table_rows[1].push(<th key={1}>Group</th>)
+        const newRow =
+            <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{nodesStr}</td>
+            </tr>
 
-    for (let i = 0; i < props.data.nodes.length; i++) {
-        const item = props.data.nodes[i];
-        let style = styles.tdCell;
-        if (i % 2 === 1) style = styles.tdCellGray;
-
-        const nodeData = (
-            <td key={item.id + 1} className={style}>
-                {item.id}
-            </td>
-        )
-
-        table_rows[0].push(nodeData);
-    }
-
-    for (let i = 0; i < props.data.nodes.length; i++) {
-        const item = props.data.nodes[i];
-        let style = styles.tdCell;
-        if (i % 2 === 1) style = styles.tdCellGray;
-
-        const groupData = (
-            <td key={`${item.groupID}${item.id + 1}`} className={style}>
-                {item.groupID}
-            </td>
-        )
-        table_rows[1].push(groupData);
+        table_rows.push(newRow)
     }
 
 
@@ -41,14 +28,13 @@ const OutputResultViewer = (props) => {
             <Card>
                 <Tabs defaultActiveKey="table">
                     <Tab eventKey="table" title="Table">
-                        <Table bordered>
+                        <Table bordered striped>
                             <tbody>
                                 <tr>
-                                    {table_rows[0]}
+                                    <th>Group</th>
+                                    <th>Nodes</th>
                                 </tr>
-                                <tr>
-                                    {table_rows[1]}
-                                </tr>
+                                {table_rows}
                             </tbody>
                         </Table>
                         <div className={styles.costIndicator}>Cost: {props.data.cost}</div>

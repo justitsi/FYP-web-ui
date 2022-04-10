@@ -32,7 +32,7 @@ def run_optimisation_job(spec):
 
     # run optimisation
     best_solutions = []
-    possible_trees = runner.run()
+    possible_trees = runner.getBestPairings()
 
     # get the best solution and only store it
     if len(possible_trees) > 0:
@@ -42,9 +42,15 @@ def run_optimisation_job(spec):
             if tree['cost'] <= best_tree['cost']:
                 best_tree = tree
 
-        best_solutions.append(best_tree)
+        # order groups in the best tree discovered
+        best_order = runner.getOptimalGroupOrder(best_tree)
 
-    # save result
-    output.finished = datetime.now()
-    output.results = best_solutions
-    session.commit()
+        best_solutions.append(best_order)
+
+        # save result
+        output.finished = datetime.now()
+        output.results = best_solutions
+        session.commit()
+        session.close()
+    else:
+        session.close()

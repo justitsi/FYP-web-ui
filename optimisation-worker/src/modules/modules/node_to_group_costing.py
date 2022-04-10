@@ -38,6 +38,11 @@ class NodeToGroupCostCalc:
                 if (groupSize >= group_info_full[param['group_property_name']]):
                     cost += param['multiplier'] * ((groupSize) - group_info_full[param['group_property_name']])  # nopep8
 
+            if (param['operation'] == 'count_all_under'):
+                groupSize = len(groupNodesIDs) + 1
+                if (groupSize <= group_info_full[param['group_property_name']]):
+                    cost += param['multiplier'] * (group_info_full[param['group_property_name']] - (groupSize))  # nopep8
+
             if (param['operation'] == 'add_once'):
                 if (len(groupNodesIDs) == 0):
                     cost += param['multiplier'] * group_info_full[param['group_property_name']]  # nopep8
@@ -87,6 +92,19 @@ class NodeToGroupCostCalc:
                 if (difference > 0):
                     cost = difference * costParam['multiplier']
 
+            if (costParam['operation'] == 'binary_group_array_excludes'):
+                includes = False
+                for i in range(0, len(groupProperty)):
+                    if groupProperty[i] == 1:
+                        if nodeProperty[i] == groupProperty[i]:
+                            includes = True
+                            break
+
+                if (not includes):
+                    cost = costParam['multiplier']
+
+            if (costParam['operation'] == 'affinities_list_prioritised'):
+                pass
         return cost
 
     # lookup full group properties by id

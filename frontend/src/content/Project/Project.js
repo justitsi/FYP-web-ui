@@ -25,7 +25,6 @@ const Project = (props) => {
 
         getRequest(address_project).then((result_project) => {
             getRequest(address_outputs).then((result_outputs) => {
-                console.log(result_project)
                 if (parseInt(result_project.status) == 200) {
                     const jobSpec = {
                         costing_params: result_project.data.costing_options,
